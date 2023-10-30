@@ -14,6 +14,24 @@ tasks.named('jar') {
   archiveBaseName.set(rootProject.name)
 }
 
+sourceSets {
+  main {
+    groovy {
+      srcDirs = ['src', 'vars']
+    }
+
+    resources {
+      srcDirs = ['resources']
+    }
+  }
+
+  test {
+    groovy {
+      srcDirs = ['test']
+    }
+  }
+}
+
 repositories {
   mavenCentral()
 }
