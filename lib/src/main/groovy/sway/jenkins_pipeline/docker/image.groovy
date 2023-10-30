@@ -2,17 +2,16 @@ package sway.jenkins_pipeline.docker
 
 class Image implements Entity {
   private String docker_
-  private ImageName name_
+  private ImageName imageName_
 
   Image(String dockerPath, String name, String tag) {
     this.docker_ = "${dockerPath}/docker"
-    this.name_ = new ImageName(name, tag)
+    this.imageName_ = new ImageName(name, tag)
   }
 
   // override
   String name() {
-    def (name, tag) = this.name_.toList()
-    return "${name}:${tag}";
+    return "${this.imageName_.name()}:${this.imageName_.tag()}"
   }
 
   String id(step) {
