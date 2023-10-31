@@ -5,7 +5,7 @@ import spock.lang.Specification
 class ImageTest extends Specification {
     def "name returns default:latest"() {
         setup:
-        def img = new Image("./", "default", "latest")
+        def img = new MyImage("./", "default", "latest")
 
         when:
         def result = img.name()

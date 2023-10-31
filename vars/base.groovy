@@ -6,8 +6,8 @@ def booleanToCMakeStr(Boolean val) {
   return (val) ? "ON" : "OFF"
 }
 
-Image createImage(String dockerPath, String name, String tag) {
-  new Image(dockerPath, name, tag)
+MyImage createImage(String dockerPath, String name, String tag) {
+  new MyImage(dockerPath, name, tag)
 }
 
 return this

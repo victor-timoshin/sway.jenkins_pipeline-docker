@@ -1,5 +1,5 @@
 package sway.jenkins_pipeline.docker
 
-interface Entity {
+interface MyEntity {
   String name()
 }

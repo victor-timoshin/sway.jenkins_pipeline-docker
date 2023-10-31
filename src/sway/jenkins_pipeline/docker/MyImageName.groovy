@@ -1,10 +1,10 @@
 package sway.jenkins_pipeline.docker
 
-class ImageName {
+class MyImageName {
   private String name_
   private String tag_
 
-  ImageName(String name, String tag) {
+  MyImageName(String name, String tag) {
     this.name_ = name
     this.tag_ = tag
   }
