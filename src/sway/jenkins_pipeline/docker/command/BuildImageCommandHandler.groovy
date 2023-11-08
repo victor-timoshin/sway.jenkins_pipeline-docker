@@ -13,7 +13,7 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
     def outStream = new StringBuilder()
     def errStream = new StringBuilder()
 
-    def proc = "${this.executable}/docker build ${command.toString()} .".execute()
+    def proc = "${this.executable}/docker build ${command.line.toString()} .".execute()
     proc.waitForProcessOutput(outStream, errStream)
 
     // println "out > ${outStream}"
