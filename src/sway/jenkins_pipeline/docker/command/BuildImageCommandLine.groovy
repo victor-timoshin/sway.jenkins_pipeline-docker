@@ -9,6 +9,7 @@ class BuildImageCommandLine {
 
   public Map<String, Object> parameters = new HashMap<String, Object>()
 
+  @NonCPS
   public void addParameter(String name, Object value) {
     Objects.requireNonNull(name, "Parameter name [${name}] cannot be null")
 
@@ -26,14 +27,17 @@ class BuildImageCommandLine {
     this.addParameter("tag", referenceName)
   }
 
+  @NonCPS
   public void addDockerfile(String dockerfile) {
     this.addParameter("file", dockerfile)
   }
 
+  @NonCPS
   public void addTarget(String value) {
     this.addParameter("target", value)
   }
 
+  @NonCPS
   public void addDefine(String name, String value) {
     this.addParameter("build-arg", ["${name.toUpperCase() }" : value] as HashMap)
   }
