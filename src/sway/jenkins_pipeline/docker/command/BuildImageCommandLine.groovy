@@ -1,5 +1,6 @@
 package sway.jenkins_pipeline.docker.command
 
+import com.cloudbees.groovy.cps.NonCPS
 import java.util.stream.Collectors
 import java.util.Optional
 import sway.jenkins_pipeline.docker.model.TargetPlatform
@@ -20,6 +21,7 @@ class BuildImageCommandLine {
     }
   }
 
+  @NonCPS
   public void addReferenceName(String referenceName) {
     this.addParameter("tag", referenceName)
   }

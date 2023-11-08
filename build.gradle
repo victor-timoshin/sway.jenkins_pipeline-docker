@@ -37,6 +37,7 @@ repositories {
 }
 
 dependencies {
+  implementation 'com.cloudbees:groovy-cps:1.30'
   implementation 'org.codehaus.groovy:groovy-all:3.0.18'
   implementation 'com.google.guava:guava:32.1.1-jre'
   api 'org.apache.commons:commons-math3:3.6.1'
