@@ -54,14 +54,14 @@ class BuildImageCommandLine {
   }
 
   public String toString() {
-    return this.parameters.keySet().stream().map(key -> {
+    return this.parameters.keySet().stream().map { key -> 
       Object value = this.parameters.get(key)
       if (this.isHashMap(value)) {
         return this.parseMap(key, value)
       } else {
         return this.parse(key, value)
       }
-    }).collect(Collectors.joining(" "))
+    }.collect(Collectors.joining(" "))
   }
 
 }
