@@ -42,7 +42,8 @@ class BuildImageCommandLine {
 
   private String parseMap(String key, Optional<Map<String, String>> values) {
     return values.get().entrySet().stream()
-      .reduce("", (subtotal, element) -> subtotal + " --${key} ${element}")
+      .reduce("", { acc, next -> acc + " --${key} ${next}" })
+      // .reduce("", (acc, next) -> acc + " --${key} ${next}")
       .substring(1)
   }
 
