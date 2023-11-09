@@ -65,7 +65,7 @@ class BuildImageCommandLine {
   @NonCPS
   public String toString() {
     return this.parameters.keySet().stream().map { key -> 
-      Object value = this.parameters.get(key)
+      Optional<Object> value = this.parameters.get(key)
       if (this.isHashMap(value)) {
         return this.parseMap(key, value)
       } else {
