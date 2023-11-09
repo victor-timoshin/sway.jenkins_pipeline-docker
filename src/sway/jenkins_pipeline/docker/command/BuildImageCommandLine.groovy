@@ -17,6 +17,8 @@ class BuildImageCommandLine {
     if (this.parameters.containsKey(name)) {
       if (value instanceof HashMap) {
         value.each { iter -> this.parameters.get(name).get().put(iter.key, iter.value) }
+      } else {
+        this.parameters.put(name, Optional.ofNullable(value))
       }
     } else {
       this.parameters.put(name, Optional.ofNullable(value))
