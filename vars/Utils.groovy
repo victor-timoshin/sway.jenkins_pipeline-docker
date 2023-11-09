@@ -1,8 +1,18 @@
 #!/usr/bin/env groovy
 
-import sway.jenkins_pipeline.docker.*
+import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
 
-def booleanToCMakeStr(Boolean val) {
+void approveSignatures(ArrayList<String> signatures) {
+    def scriptApproval = ScriptApproval.get()
+    def alreadyApproved = new HashSet<>(Arrays.asList(scriptApproval.getApprovedSignatures()))
+    signatures.each {
+      if (!alreadyApproved.contains(it)) {
+        scriptApproval.approveSignature(it)
+      }
+    }
+}
+
+String booleanToCMakeStr(Boolean val) {
   return (val) ? "ON" : "OFF"
 }
 
