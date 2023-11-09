@@ -43,6 +43,7 @@ class BuildImageCommandLine {
     this.addParameter("build-arg", ["${name.toUpperCase() }" : value] as HashMap)
   }
 
+  @NonCPS
   private Boolean isHashMap(Object value) {
     return value.isPresent() && value.get() instanceof HashMap
   }
