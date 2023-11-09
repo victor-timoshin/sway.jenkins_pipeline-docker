@@ -8,7 +8,7 @@ import sway.jenkins_pipeline.docker.model.TargetPlatform
 
 class BuildImageCommandLine {
 
-  public Map<String, Object> parameters = new HashMap<String, Object>()
+  public Map<String, Optional<Object>> parameters = new HashMap()
 
   @NonCPS
   public void addParameter(String name, Object value) {
@@ -44,7 +44,7 @@ class BuildImageCommandLine {
   }
 
   @NonCPS
-  private Boolean isHashMap(Object value) {
+  private Boolean isHashMap(Optional<Object> value) {
     return value.isPresent() && value.get() instanceof HashMap
   }
 
