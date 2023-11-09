@@ -59,6 +59,7 @@ class BuildImageCommandLine {
       : "--${key}"
   }
 
+  @NonCPS
   public String toString() {
     return this.parameters.keySet().stream().map { key -> 
       Object value = this.parameters.get(key)
