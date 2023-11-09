@@ -48,12 +48,14 @@ class BuildImageCommandLine {
     return value.isPresent() && value.get() instanceof HashMap
   }
 
+  @NonCPS
   private String parseMap(String key, Optional<Map<String, String>> values) {
     return values.get().entrySet().stream()
       .reduce("", (BinaryOperator<String>) { String acc, Map.Entry next -> acc + " --${key} ${next.getValue()}" })
       .substring(1)
   }
 
+  @NonCPS
   private String parse(String key, Optional<String> value) {
     return value.isPresent() 
       ? "--${key} ${value.get()}" 
