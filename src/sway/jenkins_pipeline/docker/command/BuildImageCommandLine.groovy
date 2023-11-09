@@ -3,6 +3,7 @@ package sway.jenkins_pipeline.docker.command
 import com.cloudbees.groovy.cps.NonCPS
 import java.util.stream.Collectors
 import java.util.Optional
+import java.util.function.BinaryOperator
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 
 class BuildImageCommandLine {
@@ -48,8 +49,7 @@ class BuildImageCommandLine {
 
   private String parseMap(String key, Optional<Map<String, String>> values) {
     return values.get().entrySet().stream()
-      .reduce("", { acc, next -> acc + " --${key} ${next}" })
-      // .reduce("", (acc, next) -> acc + " --${key} ${next}")
+      .reduce("", (BinaryOperator<String>) { String acc, Map.Entry next -> acc + " --${key} ${next.getValue()}" })
       .substring(1)
   }
 
