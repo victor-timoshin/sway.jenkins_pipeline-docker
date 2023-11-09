@@ -36,7 +36,7 @@ class BuildImageCommandLine {
   }
 
   @NonCPS
-  public void addTarget(String value) {
+  public void addTarget(Object value) {
     this.addParameter("target", value)
   }
 
