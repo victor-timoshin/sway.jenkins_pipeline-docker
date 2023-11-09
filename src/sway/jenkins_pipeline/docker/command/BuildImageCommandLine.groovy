@@ -51,7 +51,7 @@ class BuildImageCommandLine {
   @NonCPS
   private String parseMap(String key, Optional<Map<String, String>> values) {
     return values.get().entrySet().stream()
-      .reduce("", (BinaryOperator<String>) { String acc, Map.Entry next -> acc + " --${key} ${next.getValue()}" })
+      .reduce("", (BinaryOperator<String>) { String acc, Map.Entry next -> acc + " --${key} ${next.getKey()}=${next.getValue()}" })
       .substring(1)
   }
 

@@ -13,7 +13,7 @@ class BuildImageCommand implements Command {
     this.line.addParameter("pull", null)
     this.line.addParameter("rm", null)
     this.line.addParameter("progress", "plain")
-    this.line.addTarget("module_x-release")
+    this.line.addTarget('module_x-release')
     this.line.addDefine("TARGET_PLATFORM_OS", platform.os.name)
     this.line.addDefine("TARGET_PLATFORM_ARCH", platform.arch.alias)
     this.line.addDefine("TARGET_PLATFORM", platform.os.name + "/" + platform.arch.alias)
