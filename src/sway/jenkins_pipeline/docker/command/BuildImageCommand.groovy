@@ -6,7 +6,9 @@ class BuildImageCommand implements Command {
 
   public BuildImageCommandLine line = new BuildImageCommandLine()
 
-  BuildImageCommand(String referenceName, TargetPlatform platform, String dockerfile, Map<String, String> defines) {
+  public String workspace
+
+  BuildImageCommand(String referenceName, TargetPlatform platform, String dockerfile, Map<String, String> defines, String workspace) {
     this.line.addReferenceName(referenceName)
     this.line.addDockerfile(dockerfile)
     this.line.addParameter("no-cache", null)
@@ -18,6 +20,8 @@ class BuildImageCommand implements Command {
     this.line.addDefine("TARGET_PLATFORM_ARCH", platform.arch.alias)
     this.line.addDefine("TARGET_PLATFORM", platform.os.name + "/" + platform.arch.alias)
     defines.each { key, value -> this.line.addDefine(key, value) }
+
+    this.workspace = workspace
   }
 
 }

@@ -15,7 +15,7 @@ class BuildImageCommandTest extends Specification {
     def dockerfile = "/Users/apriori85/Documents/Projects/sway.jenkins_pipeline-docker/Dockerfile"
     def buildArgs = ["tests":"false", "coverage":"false"]
     def image = new ImageEntity("myname", "mytag", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
-    def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, dockerfile, buildArgs)
+    def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, dockerfile, buildArgs, ".")
     def imageCommandExecutablePath = "/Applications/Docker.app/Contents/Resources/bin"
     def imageCommandHandler = new BuildImageCommandHandler(imageCommandExecutablePath)
 
