@@ -31,7 +31,7 @@ class BuildImageCommandLine {
   }
 
   @NonCPS
-  public void addDockerfile(String dockerfile) {
+  public void addDockerfile(Object dockerfile) {
     this.addParameter("file", dockerfile)
   }
 

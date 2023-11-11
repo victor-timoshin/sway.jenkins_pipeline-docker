@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
+import org.jenkinsci.plugins.scriptsecurity.scripts.*
 
 void approveSignatures(ArrayList<String> signatures) {
     def scriptApproval = ScriptApproval.get()
