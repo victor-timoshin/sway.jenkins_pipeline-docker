@@ -31,9 +31,11 @@ class ScriptBuilder {
       //   return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}"
       // }
 
-      BinaryOperator<String> operator = (BinaryOperator<String>) { String acc, Map.Entry next -> 
-        return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
-      query.append(" ").append(it.data.entrySet().stream().reduce("", operator).substring(1))
+      if (it.data.size() > 0) {
+        BinaryOperator<String> operator = (BinaryOperator<String>) { String acc, Map.Entry next -> 
+          return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
+        query.append(" ").append(it.data.entrySet().stream().reduce("", operator).substring(1))
+      }
     }
   }
 

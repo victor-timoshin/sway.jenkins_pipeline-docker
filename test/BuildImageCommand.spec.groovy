@@ -21,7 +21,7 @@ class BuildImageCommandTest extends Specification {
     setup:
     String dockerFile = "/Users/apriori85/Documents/Projects/sway.jenkins_pipeline-docker/dockerfile"
     String dockerEnvFile = "/docker.env"
-    Map<String, String> envs = ["os":"linux", "arch":"86"]
+    Map<String, String> envs = [:]
     Map<String, String> args = ["tests":"false", "coverage":"false"]
     ImageEntity imageEntity = new ImageEntity("myname", "mytag", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
     BuildImageCommand imageCommand = new BuildImageCommand(imageEntity, ".", dockerFile, dockerEnvFile, envs, args, "module_x-release")
