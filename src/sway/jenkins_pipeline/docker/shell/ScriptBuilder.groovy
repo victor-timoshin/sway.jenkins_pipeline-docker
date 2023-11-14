@@ -26,20 +26,23 @@ class ScriptBuilder {
 
   public void addOptionGroup(Field field, Object object) {
     Optional<Map<String, String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, HashMap.class)
-    optionDescriptorOpt.ifPresent(descriptor -> {
-      BinaryOperator<String> operator = (String acc, Map.Entry next) -> 
-        acc + " ${prefix}${descriptor.name} ${next.getKey()}=${next.getValue()}"
+    optionDescriptorOpt.ifPresent {
+      // BinaryOperator<String> operator = (String acc, Map.Entry next) { 
+      //   return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}"
+      // }
 
-      query.append(" ").append(descriptor.data.entrySet().stream().reduce("", operator).substring(1))
-    })
+      BinaryOperator<String> operator = (BinaryOperator<String>) { String acc, Map.Entry next -> 
+        return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
+      query.append(" ").append(it.data.entrySet().stream().reduce("", operator).substring(1))
+    }
   }
 
   public void addOption(Field field, Object object) {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
-    optionDescriptorOpt.ifPresent(descriptor -> {
-      query.append(" ").append(prefix + descriptor.name)
-           .append(" ").append(descriptor.data)
-    })
+    optionDescriptorOpt.ifPresent {
+      query.append(" ").append(prefix + it.name)
+           .append(" ").append(it.data)
+    }
   }
 
   public String toString() {
