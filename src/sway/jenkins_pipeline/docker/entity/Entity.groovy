@@ -8,7 +8,7 @@ class Entity {
 
   Entity(String name) {
     if (name.isEmpty()) {
-      throw new IllegalArgumentException("Name can't be empty");
+      throw new IllegalArgumentException("Name can't be empty")
     }
 
     this.name = name

@@ -2,7 +2,7 @@ package sway.jenkins_pipeline.docker.command
 
 class CommandResult<TCommandResultData> {
 
-  public final Optional<TCommandResultData> data;
+  public final Optional<TCommandResultData> data
 
   public final String message
 
