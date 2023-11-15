@@ -42,7 +42,7 @@ class ScriptBuilder {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
     optionDescriptorOpt.ifPresent {
       query.append(" ").append(prefix + it.name).append(" ")
-           .append(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}${it.data}" : it.data)
+           .append(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data)
     }
   }
 
