@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation
 import java.util.Optional
 import java.util.stream.Collectors
 import java.util.function.BinaryOperator
+import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
@@ -24,6 +25,7 @@ class ScriptBuilder {
     this.workspace = workspace
   }
 
+  @NonCPS
   public void addOptionGroup(Field field, Object object) {
     Optional<Map<String, String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, HashMap.class)
     optionDescriptorOpt.ifPresent {
@@ -39,6 +41,7 @@ class ScriptBuilder {
     }
   }
 
+  @NonCPS
   public void addOption(Field field, Object object) {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
     optionDescriptorOpt.ifPresent {
