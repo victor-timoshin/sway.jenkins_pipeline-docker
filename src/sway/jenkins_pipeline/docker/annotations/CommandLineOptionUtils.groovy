@@ -12,6 +12,7 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class CommandLineOptionUtils {
 
+  @NonCPS
   public static <T> boolean isValid(Field field, Object object, Class<T> objectClass) {
     return (!field.getAnnotation(CommandLineOption).exclude() && objectClass.isAssignableFrom(field.get(object).getClass()))
   }
@@ -30,6 +31,7 @@ class CommandLineOptionUtils {
     ))
   }
 
+  @NonCPS
   public static Set<Field> findFields(Object object) {
     Set<Field> fieldSet = new HashSet<>()
     for (Field field : object.getClass().getDeclaredFields()) {
@@ -41,6 +43,7 @@ class CommandLineOptionUtils {
     return fieldSet
   }
 
+  @NonCPS
   public static Field findField(Object object, String name) {
     return object.getClass().getDeclaredField(name)
   }
