@@ -1,5 +1,6 @@
 package sway.jenkins_pipeline.docker.entity
 
+import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 
 class ImageEntity extends Entity {
@@ -15,6 +16,7 @@ class ImageEntity extends Entity {
     this.platform = platform
   }
 
+  @NonCPS
   public String nameWithTag() { return "${this.name}:${this.tag}" }
 
 }
