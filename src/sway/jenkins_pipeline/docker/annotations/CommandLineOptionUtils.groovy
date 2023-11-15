@@ -8,6 +8,7 @@ import java.lang.annotation.Retention
 import java.lang.annotation.Target
 import java.util.Optional
 import java.util.function.BinaryOperator
+import com.cloudbees.groovy.cps.NonCPS
 
 class CommandLineOptionUtils {
 
@@ -15,6 +16,7 @@ class CommandLineOptionUtils {
     return (!field.getAnnotation(CommandLineOption).exclude() && objectClass.isAssignableFrom(field.get(object).getClass()))
   }
 
+  @NonCPS
   public static <T> Optional<CommandLineOptionDescriptor<T>> getDescriptor(Field field, Object object, Class<T> objectClass) {
     if (!CommandLineOptionUtils.isValid(field, object, objectClass)) {
       return Optional.empty()
