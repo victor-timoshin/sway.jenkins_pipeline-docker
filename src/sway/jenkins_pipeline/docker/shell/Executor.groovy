@@ -2,7 +2,7 @@ package sway.jenkins_pipeline.docker.shell
 
 interface Executor {
 
-  Response execute(StringBuilder builder)
+  Response execute(ScriptBuilder builder)
 
   String getOutString()
 

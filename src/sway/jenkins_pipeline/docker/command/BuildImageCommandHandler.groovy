@@ -23,19 +23,18 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
   public CommandResult<String> handle(BuildImageCommand command) {
     this.builder = new ScriptBuilder("build")
     this.builder.setWorkspace(command.dockerWorkspace)
-    this.builder.addOption(CommandLineOptionUtils.findField(command, "reference"), command)
-    this.builder.addOption(CommandLineOptionUtils.findField(command, "target"), command)
 
     CommandLineOptionUtils.findFields(command).each { field -> 
+      this.builder.addOption(field, command)
       this.builder.addOptionGroup(field, command)
     }
 
-    Response response = executor.execute()
+    Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
-      return CommandResult.Unsuccessful(executor.getErrString())
+      return CommandResult.Unsuccessful(this.executor.getErrString())
     }
 
-    return CommandResult.Successful("id", executor.getOutString())
+    return CommandResult.Successful("id", this.executor.getOutString())
   }
 
 }

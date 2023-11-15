@@ -11,13 +11,13 @@ class BuildImageCommand implements Command {
   @CommandLineOption(name = "tag")
   public String reference
 
-  @CommandLineOption(exclude = true)
+  @CommandLineOption(excluded = true)
   public String dockerWorkspace
 
-  @CommandLineOption(name = "file")
+  @CommandLineOption(name = "file", workspaceDir = true)
   public String dockerFile
 
-  @CommandLineOption(name = "env-file")
+  @CommandLineOption(name = "env-file", workspaceDir = true)
   public String dockerEnvFile
 
   @CommandLineOption(name = "env")
@@ -38,9 +38,6 @@ class BuildImageCommand implements Command {
     // this.line.addParameter("rm", null)
     // this.line.addParameter("progress", "plain")
     // this.line.addTarget("module_x-release")
-    // this.line.addDefine("TARGET_PLATFORM_OS", entity.platform.os.name)
-    // this.line.addDefine("TARGET_PLATFORM_ARCH", entity.platform.arch.alias)
-    // this.line.addDefine("TARGET_PLATFORM", entity.platform.os.name + "/" + entity.platform.arch.alias)
     // arguments.each { key, value -> this.line.addDefine(key, value) }
 
     this.reference = entity.nameWithTag() + "-" + entity.platform.arch.alias.replace("/", "")

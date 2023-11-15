@@ -11,7 +11,9 @@ import java.lang.annotation.Target
 @Retention(RetentionPolicy.RUNTIME)
 @interface CommandLineOption {
 
-  boolean exclude() default false
+  boolean workspaceDir() default false
+
+  boolean excluded() default false
 
   String name() default ""
 
