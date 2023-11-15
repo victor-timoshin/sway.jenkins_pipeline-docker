@@ -14,7 +14,7 @@ class CommandLineOptionUtils {
 
   @NonCPS
   public static <T> boolean isValid(Field field, Object object, Class<T> objectClass) {
-    return (!field.getAnnotation(CommandLineOption).excluded() && objectClass.isAssignableFrom(field.get(object).getClass()))
+    return (!field.getAnnotation(CommandLineOption).skipped() && objectClass.isAssignableFrom(field.get(object).getClass()))
   }
 
   @NonCPS

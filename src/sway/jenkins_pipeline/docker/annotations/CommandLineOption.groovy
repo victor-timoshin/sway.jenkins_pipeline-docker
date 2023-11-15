@@ -13,7 +13,9 @@ import java.lang.annotation.Target
 
   boolean workspaceDir() default false
 
-  boolean excluded() default false
+  boolean required() default false
+
+  boolean skipped() default false
 
   String name() default ""
 

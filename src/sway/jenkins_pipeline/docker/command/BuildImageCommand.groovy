@@ -8,17 +8,14 @@ import sway.jenkins_pipeline.docker.entity.ImageEntity
 
 class BuildImageCommand implements Command {
 
-  @CommandLineOption(name = "tag")
+  @CommandLineOption(name = "tag", required = true)
   public String reference
 
-  @CommandLineOption(excluded = true)
+  @CommandLineOption(skipped = true)
   public String dockerWorkspace
 
   @CommandLineOption(name = "file", workspaceDir = true)
   public String dockerFile
-
-  @CommandLineOption(name = "env-file", workspaceDir = true)
-  public String dockerEnvFile
 
   @CommandLineOption(name = "env")
   public Map<String, String> environments
@@ -29,23 +26,17 @@ class BuildImageCommand implements Command {
   @CommandLineOption(name = "target")
   public Object target
 
-  BuildImageCommand(ImageEntity entity, String dockerWorkspace, String dockerFile, String dockerEnvFile, 
+  BuildImageCommand(ImageEntity entity, String dockerWorkspace, String dockerFile, 
     Map<String, String> environments, Map<String, String> arguments, String target) {
-    // this.line.addReferenceName(entity.nameWithTag() + "-" + entity.platform.arch.alias.replace("/", ""))
-    // this.line.addDockerfile(dockerFile)
-    // this.line.addParameter("no-cache", null)
-    // this.line.addParameter("pull", null)
-    // this.line.addParameter("rm", null)
-    // this.line.addParameter("progress", "plain")
-    // this.line.addTarget("module_x-release")
-    // arguments.each { key, value -> this.line.addDefine(key, value) }
 
     this.reference = entity.nameWithTag() + "-" + entity.platform.arch.alias.replace("/", "")
     this.dockerWorkspace = dockerWorkspace
     this.dockerFile = dockerFile
-    this.dockerEnvFile = dockerEnvFile
     this.environments = environments
     this.arguments = arguments
+    this.arguments.put("TARGET_PLATFORM_ARCH", entity.platform.arch.alias)
+    this.arguments.put("TARGET_PLATFORM_OS", entity.platform.os.name)
+    this.arguments.put("TARGET_PLATFORM", entity.platform.os.name + "/" + entity.platform.arch.alias)
     this.target = target
   }
 
