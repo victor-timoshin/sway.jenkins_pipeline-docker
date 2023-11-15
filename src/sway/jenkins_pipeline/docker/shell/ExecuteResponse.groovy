@@ -2,7 +2,7 @@ package sway.jenkins_pipeline.docker.shell
 
 class ExecuteResponse implements Response {
 
-  public final int code
+  private final int code
 
   ExecuteResponse(int code) {
     this.code = code
