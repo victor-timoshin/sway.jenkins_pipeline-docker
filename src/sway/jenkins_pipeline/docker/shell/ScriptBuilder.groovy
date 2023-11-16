@@ -38,6 +38,7 @@ class ScriptBuilder {
     }
   }
 
+  @NonCPS
   private <T> BinaryOperator<String> mapMerger(CommandLineOptionDescriptor<T> descriptor) {
     return { String acc, Map.Entry next -> 
       return acc + " ${prefix}${descriptor.name} ${next.getKey()}=${next.getValue()}" }
