@@ -1,26 +1,30 @@
 package sway.jenkins_pipeline.docker.command
 
+import sway.jenkins_pipeline.docker.shell.ScriptBuilder
+import sway.jenkins_pipeline.docker.shell.Executor
+import sway.jenkins_pipeline.docker.shell.Response
+
 class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, String> {
 
-  private final String executable_
+  private final Executor executor
 
-  PushEntityCommandHandler(String executable) {
-    this.executable_ = executable
+  private ScriptBuilder builder
+
+  PushEntityCommandHandler(Executor executor) {
+    this.executor = executor
   }
 
   @Override
   public CommandResult<String> handle(PushEntityCommand command) {
-    def outStream = new StringBuilder()
-    def errStream = new StringBuilder()
+    this.builder = new ScriptBuilder("push")
+    this.builder.query.append(" ").append(command.reference)
 
-    def process = "${this.executable}/docker push ${command.entity.nameWithTag()}".execute()
-    process.waitForProcessOutput(outStream, errStream)
-
-    if (process.exitValue()) {
-      return CommandResult.Unsuccessful(errStream.toString().trim())
+    Response response = this.executor.execute(this.builder)
+    if (response.getCode() != 0) {
+      return CommandResult.Unsuccessful(this.executor.getErrString())
     }
 
-    return CommandResult.Successful("id", outStream.toString().trim())
+    return CommandResult.Successful(null, this.executor.getOutString())
   }
   
 }

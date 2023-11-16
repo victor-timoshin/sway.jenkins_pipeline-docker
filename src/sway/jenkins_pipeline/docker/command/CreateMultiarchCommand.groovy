@@ -1,14 +1,19 @@
 package sway.jenkins_pipeline.docker.command
 
-import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.entity.MultiarchImageEntity
+import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 
 class CreateMultiarchCommand implements Command {
 
-  public ImageEntity entity
+  @CommandLineOption(skipped = true)
+  public String reference
 
-  CreateMultiarchCommand(ImageEntity entity) {
-    this.entity = entity
+  @CommandLineOption(name = "amend")
+  public List<String> images
+
+  CreateMultiarchCommand(MultiarchImageEntity entity, List<String> images) {
+    this.reference = entity.nameWithTag()
+    this.images = images
   }
-  
-}
 
+}

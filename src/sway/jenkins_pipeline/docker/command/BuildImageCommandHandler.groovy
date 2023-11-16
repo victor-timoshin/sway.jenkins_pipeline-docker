@@ -26,7 +26,7 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
 
     CommandLineOptionUtils.findFields(command).each { field -> 
       this.builder.addOption(field, command)
-      this.builder.addOptionGroup(field, command)
+      this.builder.addMapOption(field, command)
     }
 
     Response response = this.executor.execute(this.builder)
@@ -34,7 +34,7 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
       return CommandResult.Unsuccessful(this.executor.getErrString())
     }
 
-    return CommandResult.Successful("id", this.executor.getOutString())
+    return CommandResult.Successful(null, this.executor.getOutString())
   }
 
 }

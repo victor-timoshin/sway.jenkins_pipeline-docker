@@ -7,6 +7,7 @@ import java.util.stream.Collectors
 import java.util.function.BinaryOperator
 import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.annotations.CommandLineOption
+import sway.jenkins_pipeline.docker.annotations.CommandLineOptionDescriptor
 import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
 class ScriptBuilder {
@@ -26,13 +27,30 @@ class ScriptBuilder {
   }
 
   @NonCPS
-  public void addOptionGroup(Field field, Object object) {
+  public void addListOption(Field field, Object object) {
+    Optional<List<String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, ArrayList.class)
+    optionDescriptorOpt.ifPresent {
+      if (it.data.size() > 0) {
+        BinaryOperator<String> operator = { String acc, String next -> 
+          return acc + " ${prefix}${it.name} ${next}" }
+        query.append(" ").append(it.data.stream().reduce("", operator).substring(1))
+      }
+    }
+  }
+
+  private <T> BinaryOperator<String> mapMerger(CommandLineOptionDescriptor<T> descriptor) {
+    return { String acc, Map.Entry next -> 
+      return acc + " ${prefix}${descriptor.name} ${next.getKey()}=${next.getValue()}" }
+  }
+
+  @NonCPS
+  public void addMapOption(Field field, Object object) {
     Optional<Map<String, String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, HashMap.class)
     optionDescriptorOpt.ifPresent {
       if (it.data.size() > 0) {
-        BinaryOperator<String> operator = (BinaryOperator<String>) { String acc, Map.Entry next -> 
-          return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
-        query.append(" ").append(it.data.entrySet().stream().reduce("", operator).substring(1))
+        // BinaryOperator<String> operator = { String acc, Map.Entry next -> 
+        //   return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
+        query.append(" ").append(it.data.entrySet().stream().reduce("", mapMerger(it)).substring(1))
       }
     }
   }

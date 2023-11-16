@@ -2,14 +2,15 @@ package sway.jenkins_pipeline.docker.command
 
 import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 
 class PushEntityCommand implements Command {
 
-  public Entity entity
+  @CommandLineOption(skipped = true)
+  public String reference
 
-  PushEntityCommand(Entity entity) {
-    this.entity = entity
+  PushEntityCommand(ImageEntity entity) {
+    this.reference = entity.nameWithTag()
   }
   
 }
-

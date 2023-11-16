@@ -1,32 +1,32 @@
 package sway.jenkins_pipeline.docker.command
 
+import sway.jenkins_pipeline.docker.shell.ScriptBuilder
+import sway.jenkins_pipeline.docker.shell.Executor
+import sway.jenkins_pipeline.docker.shell.Response
+
 class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCommand, String> {
 
-  private final String executable
+  private final Executor executor
 
-  CreateMultiarchCommandHandler(String executable) {
-    this.executable = executable
+  private ScriptBuilder builder
+
+  CreateMultiarchCommandHandler(Executor executor) {
+    this.executor = executor
   }
 
   @Override
   public CommandResult<String> handle(CreateMultiarchCommand command) {
-    def outStream = new StringBuilder()
-    def errStream = new StringBuilder()
+    this.builder = new ScriptBuilder("manifest create")
 
-      // docker manifest create \
-      //           sway/MODULE_GAPI_GL_IMAGE_NAME:MODULE_GAPI_GL_IMAGE_TAG \
-      //   --amend sway/MODULE_GAPI_GL_IMAGE_NAME:MODULE_GAPI_GL_IMAGE_TAG-amd64 \
-      //   --amend sway/MODULE_GAPI_GL_IMAGE_NAME:MODULE_GAPI_GL_IMAGE_TAG-arm32v7 \
-      //   --amend sway/MODULE_GAPI_GL_IMAGE_NAME:MODULE_GAPI_GL_IMAGE_TAG-arm64v8
+    this.builder.query.append(" ").append(command.reference)
+    this.builder.addListOption(CommandLineOptionUtils.findField(command, "amend"), command)
 
-    def process = "${this.executable}/docker manifest create ${command.entity.nameWithTag()}".execute()
-    process.waitForProcessOutput(outStream, errStream)
-
-    if (process.exitValue()) {
-      return CommandResult.Unsuccessful(errStream.toString().trim())
+    Response response = this.executor.execute(this.builder)
+    if (response.getCode() != 0) {
+      return CommandResult.Unsuccessful(this.executor.getErrString())
     }
 
-    return CommandResult.Successful("id", outStream.toString().trim())
+    return CommandResult.Successful(null, this.executor.getOutString())
   }
   
 }
