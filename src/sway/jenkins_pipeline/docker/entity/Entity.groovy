@@ -25,8 +25,13 @@ class Entity {
   }
 
   @NonCPS
+  public Optional<String> getTag() {
+    return this.tag
+  }
+
+  @NonCPS
   public String nameWithTag() {
-    return this.name + (tag.isPresent() ? "${TAG_SEPARATE}${this.tag.get()}" : TAG_EMPTY_STRING)
+    return this.name + (tag.isPresent() ? "${TAG_SEPARATE}${getTag().get()}" : TAG_EMPTY_STRING)
   }
 
 }
