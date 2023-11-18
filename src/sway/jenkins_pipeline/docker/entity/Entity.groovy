@@ -5,9 +5,13 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class Entity {
 
+  public static final String TAG_EMPTY_STRING = ""
+
+  public static final String TAG_SEPARATE = ":"
+
   public final String name
 
-  public String tag
+  public Optional<String> tag
 
   public Optional<String> uid
 
@@ -17,13 +21,13 @@ class Entity {
     }
 
     this.name = name
-    this.tag = tag
+    this.tag = Optional.ofNullable(tag)
     this.uid = Optional.empty()
   }
 
   @NonCPS
   public String nameWithTag() {
-    return "${this.name}:${this.tag}"
+    return this.name + (tag.isPresent() ? TAG_SEPARATE + this.tag.get() : TAG_EMPTY_STRING)
   }
 
 }

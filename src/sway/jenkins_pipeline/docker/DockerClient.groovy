@@ -19,8 +19,8 @@ class DockerClient {
     this.executable = executable
   }
 
-  public createContainer(String name, List<TargetPlatform> platforms) {
-    this.container = new ContainerEntity(name, platforms)
+  public createContainer(String name) {
+    this.container = new ContainerEntity(name)
   }
 
   public ContainerResponse inspect(ContainerInspector inspector) {

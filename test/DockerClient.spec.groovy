@@ -13,7 +13,7 @@ class DockerClientTest extends Specification {
   def "status returns null"() {
     setup:
     def client = new DockerClient("/Applications/Docker.app/Contents/Resources/bin")
-    client.createContainer("sway-cntr", [ ["linux", "amd64"], ["linux", "arm64"] ])
+    client.createContainer("sway-cntr")
 
     // def inspector = Stub(ContainerInspector)
     // inspector.inspect(_, _) >> ["status":null]

@@ -17,7 +17,7 @@ class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, Stri
   @Override
   public CommandResult<String> handle(PushEntityCommand command) {
     this.builder = new ScriptBuilder("push")
-    this.builder.query.append(" ").append(command.reference)
+    this.builder.addStrOption(command.reference)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

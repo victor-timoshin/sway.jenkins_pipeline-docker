@@ -27,13 +27,22 @@ class ScriptBuilder {
   }
 
   @NonCPS
+  public void addStrOption(String value) {
+    this.query.append(" ").append(value)
+  }
+
+  @NonCPS
+  private <T> BinaryOperator<String> listMerger(CommandLineOptionDescriptor<T> descriptor) {
+    return { String acc, String next -> 
+      return acc + " ${prefix}${descriptor.name} ${next}" }
+  }
+
+  @NonCPS
   public void addListOption(Field field, Object object) {
     Optional<List<String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, ArrayList.class)
     optionDescriptorOpt.ifPresent {
       if (it.data.size() > 0) {
-        BinaryOperator<String> operator = { String acc, String next -> 
-          return acc + " ${prefix}${it.name} ${next}" }
-        query.append(" ").append(it.data.stream().reduce("", operator).substring(1))
+        addStrOption(it.data.stream().reduce("", listMerger(it)).substring(1))
       }
     }
   }
@@ -49,9 +58,7 @@ class ScriptBuilder {
     Optional<Map<String, String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, HashMap.class)
     optionDescriptorOpt.ifPresent {
       if (it.data.size() > 0) {
-        // BinaryOperator<String> operator = { String acc, Map.Entry next -> 
-        //   return acc + " ${prefix}${it.name} ${next.getKey()}=${next.getValue()}" }
-        query.append(" ").append(it.data.entrySet().stream().reduce("", mapMerger(it)).substring(1))
+        addStrOption(it.data.entrySet().stream().reduce("", mapMerger(it)).substring(1))
       }
     }
   }
@@ -60,13 +67,13 @@ class ScriptBuilder {
   public void addOption(Field field, Object object) {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
     optionDescriptorOpt.ifPresent {
-      query.append(" ").append(prefix + it.name).append(" ")
-           .append(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data)
+      addStrOption(prefix + it.name)
+      addStrOption(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data)
     }
   }
 
   public String toString() {
-    return query.toString()
+    return this.query.toString()
   }
 
 }

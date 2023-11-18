@@ -1,7 +1,6 @@
 package sway.jenkins_pipeline.docker.command
 
 import java.util.Optional
-import java.lang.reflect.Field
 import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 import sway.jenkins_pipeline.docker.entity.ImageEntity
@@ -10,6 +9,18 @@ class BuildImageCommand implements Command {
 
   @CommandLineOption(name = "tag", required = true)
   public String reference
+
+  @CommandLineOption(name = "no-nache", skipped = true)
+  public boolean noCache
+
+  @CommandLineOption(name = "pull", skipped = true)
+  public boolean pull
+
+  @CommandLineOption(name = "rm", skipped = true)
+  public boolean rm
+
+  @CommandLineOption(name = "progress", skipped = true)
+  public String progress  // plain
 
   @CommandLineOption(skipped = true)
   public String dockerWorkspace
