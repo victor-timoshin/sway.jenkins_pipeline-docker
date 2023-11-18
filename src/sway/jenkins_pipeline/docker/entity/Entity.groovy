@@ -9,9 +9,9 @@ class Entity {
 
   public static final String TAG_SEPARATE = ":"
 
-  public final String name
+  private final Optional<String> tag
 
-  public Optional<String> tag
+  public final String name
 
   public Optional<String> uid
 
@@ -26,8 +26,13 @@ class Entity {
   }
 
   @NonCPS
+  public Optional<String> getTag() {
+    return tag
+  }
+
+  @NonCPS
   public String nameWithTag() {
-    return this.name + (tag.isPresent() ? TAG_SEPARATE + this.tag.get() : TAG_EMPTY_STRING)
+    return this.name + (tag.isPresent() ? "${TAG_SEPARATE}${this.tag.get()}" : TAG_EMPTY_STRING)
   }
 
 }
