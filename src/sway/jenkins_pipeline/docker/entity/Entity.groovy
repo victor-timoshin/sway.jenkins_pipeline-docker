@@ -5,33 +5,51 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class Entity {
 
+  public static final String ID_EMPTY_STRING = ""
+
   public static final String TAG_EMPTY_STRING = ""
 
   public static final String TAG_SEPARATE = ":"
 
-  public final String name
+  private String id
 
-  public Optional<String> tag = Optional.empty()
+  private final String name
 
-  public Optional<String> uid = Optional.empty()
+  private final String tag
 
   Entity(String name, String tag) {
     if (name.isEmpty()) {
       throw new IllegalArgumentException("Name can't be empty")
     }
 
+    this.id = ID_EMPTY_STRING
     this.name = name
-    this.tag = Optional.ofNullable(tag.trim().isEmpty() ? null : tag)
+    this.tag = tag
+  }
+
+  @NonCPS
+  public Optional<String> getId() {
+    return Optional.ofNullable(this.id)
+  }
+
+  @NonCPS
+  public void setId(String id) {
+    this.id = id
+  }
+
+  @NonCPS
+  public String getName() {
+    return this.name
   }
 
   @NonCPS
   public Optional<String> getTag() {
-    return this.tag
+    return Optional.ofNullable(this.tag)
   }
 
   @NonCPS
   public String nameWithTag() {
-    return this.name + (tag.isPresent() ? "${TAG_SEPARATE}${getTag().get()}" : TAG_EMPTY_STRING)
+    return this.name + (this.tag.isEmpty() ? TAG_EMPTY_STRING : "${TAG_SEPARATE}${this.tag}")
   }
 
 }

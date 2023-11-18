@@ -27,7 +27,7 @@ class ImageInspectQueryHandlerTest extends Specification {
 
     when:
     Map<String, String> result = imgQueryHandler.handle(imgQuery)
-    imgEntity.uid = Optional.ofNullable(result.id)
+    imgEntity.setId(result.id)
 
     then:
     result.repo == "sway/module_core"
