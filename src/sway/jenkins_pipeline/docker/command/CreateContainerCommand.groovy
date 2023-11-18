@@ -15,13 +15,13 @@ class CreateContainerCommand implements Command {
   public boolean tty
 
   @CommandLineOption(skipped = true)
-  public String imageUid
+  public String imageId
 
-  CreateContainerCommand(ContainerEntity entity, boolean interactive, boolean tty, String imageUid) {
+  CreateContainerCommand(ContainerEntity entity, boolean interactive, boolean tty, String imageId) {
     this.name = entity.name
     this.interactive = interactive
     this.tty = tty
-    this.imageUid = imageUid
+    this.imageId = imageId
   }
 
 }

@@ -19,9 +19,16 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
     this.builder = new ScriptBuilder("container create")
 
     this.builder.addStrOption(command.name)
-    this.builder.addStrOption(command.interactive)
-    this.builder.addStrOption(command.tty)
-    this.builder.addStrOption(command.imageUid)
+
+    if (command.interactive) {
+      this.builder.addStrOption("--interactive")
+    }
+
+    if (command.tty) {
+    this.builder.addStrOption("--tty")
+    }
+
+    this.builder.addStrOption(command.imageId)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
