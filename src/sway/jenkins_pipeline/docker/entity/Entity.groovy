@@ -9,11 +9,11 @@ class Entity {
 
   public static final String TAG_SEPARATE = ":"
 
-  private final Optional<String> tag
-
   public final String name
 
-  public Optional<String> uid
+  public Optional<String> tag = Optional.empty()
+
+  public Optional<String> uid = Optional.empty()
 
   Entity(String name, String tag) {
     if (name.isEmpty()) {
@@ -21,13 +21,7 @@ class Entity {
     }
 
     this.name = name
-    this.tag = Optional.ofNullable(tag.isEmpty() ? null : tag)
-    this.uid = Optional.empty()
-  }
-
-  @NonCPS
-  public Optional<String> getTag() {
-    return tag
+    this.tag = Optional.ofNullable(tag.trim().isEmpty() ? null : tag)
   }
 
   @NonCPS
