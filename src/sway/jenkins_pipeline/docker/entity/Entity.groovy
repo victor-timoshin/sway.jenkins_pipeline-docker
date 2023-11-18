@@ -21,7 +21,7 @@ class Entity {
     }
 
     this.name = name
-    this.tag = Optional.ofNullable(tag)
+    this.tag = tag.isEmpty() ? Optional.empty() : Optional.of(tag)
     this.uid = Optional.empty()
   }
 

@@ -20,7 +20,6 @@ class ScriptExecutor implements Executor {
       builder.addStrOption(builder.workspace)
     }
 
-    println "execute >> " + builder.toString()
     Process process = "${this.executable}/docker ${builder.toString()}".execute()
     process.waitForProcessOutput(outStream, errStream)
     return new ExecuteResponse(process.exitValue())
