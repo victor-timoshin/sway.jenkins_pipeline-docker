@@ -2,6 +2,7 @@ package sway.jenkins_pipeline.docker.shell
 
 import java.lang.reflect.Field
 import java.lang.annotation.Annotation
+import com.cloudbees.groovy.cps.NonCPS
 
 class ScriptExecutor implements Executor {
 
@@ -14,6 +15,7 @@ class ScriptExecutor implements Executor {
     this.executable = executable
   }
 
+  @NonCPS
   @Override
   public Response execute(ScriptBuilder builder) {
     Optional<String> workspaceOpt = builder.getWorkspace()
