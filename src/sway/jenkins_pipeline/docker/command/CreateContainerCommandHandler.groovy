@@ -26,7 +26,7 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
     this.builder = ScriptBuilder.getInstance(this, "container create")
 
     this.builder.addOption(CommandLineOptionUtils.findField(command, "name"), command)
-    this.builder.addStringOption(command.imageRefName, true)
+    this.builder.addStringOption(command.imageRefName, false)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
