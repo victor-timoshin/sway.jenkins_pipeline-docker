@@ -37,6 +37,8 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
       this.builder.addMapOption(field, command)
     }
 
+    println this.builder.toString()
+
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
       return CommandResult.Unsuccessful(this.executor.getErrString())
