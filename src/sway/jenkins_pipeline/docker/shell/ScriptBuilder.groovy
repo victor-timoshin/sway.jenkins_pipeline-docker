@@ -90,6 +90,7 @@ class ScriptBuilder {
     }
   }
 
+  @NonCPS
   public String toString() {
     return this.query.toString()
   }
