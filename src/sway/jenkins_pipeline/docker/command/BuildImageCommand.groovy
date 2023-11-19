@@ -10,7 +10,7 @@ class BuildImageCommand implements Command {
   @CommandLineOption(name = "tag", required = true)
   public String reference
 
-  @CommandLineOption(name = "no-nache", skipped = true)
+  @CommandLineOption(name = "no-cache", skipped = true)
   public boolean noCache
 
   @CommandLineOption(name = "pull", skipped = true)

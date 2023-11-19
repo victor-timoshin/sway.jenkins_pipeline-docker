@@ -28,7 +28,7 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
   public CommandResult<String> handle(BuildImageCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "build")
     this.builder.setWorkspace(command.dockerWorkspace)
-    this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}no-nache", command.noCache)
+    this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}no-cache", command.noCache)
     this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}pull", command.pull)
     this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}rm", command.rm)
 
