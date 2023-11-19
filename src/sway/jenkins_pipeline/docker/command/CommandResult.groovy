@@ -1,15 +1,18 @@
 package sway.jenkins_pipeline.docker.command
 
+import java.util.Optional
+import com.cloudbees.groovy.cps.NonCPS
+
 class CommandResult<TCommandResultData> {
 
-  public final Optional<TCommandResultData> data
+  private final TCommandResultData data
 
   public final String message
 
   public final Boolean succeeded
 
   CommandResult(TCommandResultData data, String message, Boolean succeeded) {
-    this.data = Optional.ofNullable(data)
+    this.data = data
     this.message = message
     this.succeeded = succeeded
   }
@@ -20,6 +23,11 @@ class CommandResult<TCommandResultData> {
 
   public static CommandResult Unsuccessful(String message) {
     return new CommandResult(null, message, false)
+  }
+
+  @NonCPS
+  public Optional<TCommandResultData> getData() {
+    return Optional.ofNullable(this.data)
   }
 
 }

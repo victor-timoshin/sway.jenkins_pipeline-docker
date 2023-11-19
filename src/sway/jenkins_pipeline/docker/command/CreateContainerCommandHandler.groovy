@@ -25,7 +25,7 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
     }
 
     if (command.tty) {
-    this.builder.addStrOption("--tty")
+      this.builder.addStrOption("--tty")
     }
 
     this.builder.addStrOption(command.imageId)
