@@ -15,7 +15,6 @@ class ScriptExecutor implements Executor {
     this.executable = executable
   }
 
-  @NonCPS
   @Override
   public Response execute(ScriptBuilder builder) {
     Optional<String> workspaceOpt = builder.getWorkspace()
