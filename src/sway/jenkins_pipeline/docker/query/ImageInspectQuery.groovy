@@ -8,11 +8,10 @@ class ImageInspectQuery implements Query {
   public String reference
 
   @CommandLineOption(name = "format", required = true)
-  public String format
+  public String format = "{\"id\":\"{{.ID}}\",\"repo\":\"{{.Repository}}\"}"
 
   ImageInspectQuery(String reference) {
     this.reference = reference
-    this.format = "{\"id\":\"{{.ID}}\",\"repo\":\"{{.Repository}}\"}"
   }
 
 }

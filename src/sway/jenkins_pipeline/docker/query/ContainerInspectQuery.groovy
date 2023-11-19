@@ -8,11 +8,10 @@ class ContainerInspectQuery implements Query {
   public String name
 
   @CommandLineOption(name = "format", required = true)
-  public String format
+  public String format = "{\"status\":\"{{.State.Status}}\"}"
 
   ContainerInspectQuery(String name) {
     this.name = name
-    this.format = "{\"status\":\"{{.State.Status}}\"}"
   }
 
 }

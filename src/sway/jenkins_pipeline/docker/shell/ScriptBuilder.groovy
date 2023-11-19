@@ -37,6 +37,7 @@ class ScriptBuilder {
     this.workspace = workspace
   }
 
+  @NonCPS
   public Optional<String> getWorkspace() {
     return Optional.ofNullable(this.workspace)
   }
