@@ -26,7 +26,7 @@ class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery
     this.builder = ScriptBuilder.getInstance(this, "inspect")
 
     this.builder.addOption(CommandLineOptionUtils.findField(query, "format"), query)
-    this.builder.addStringOption(query.name, false)
+    this.builder.addStringOption(query.name, true)
 
     Response response = this.executor.execute(this.builder)
     if (this.executor.getOutString().isEmpty() || response.getCode() != 0) {
