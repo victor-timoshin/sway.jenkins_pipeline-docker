@@ -19,8 +19,8 @@ class BuildImageCommand implements Command {
   @CommandLineOption(name = "rm", skipped = true)
   public boolean rm
 
-  @CommandLineOption(name = "progress", skipped = true)
-  public String progress  // plain
+  @CommandLineOption(name = "progress")
+  public String progress
 
   @CommandLineOption(skipped = true)
   public String dockerWorkspace
@@ -41,6 +41,10 @@ class BuildImageCommand implements Command {
     Map<String, String> environments, Map<String, String> arguments, String target) {
 
     this.reference = entity.nameWithTag() + "-" + entity.platform.arch.alias.replace("/", "")
+    this.noCache = true
+    this.pull = true
+    this.rm = true
+    this.progress = "plain"
     this.dockerWorkspace = dockerWorkspace
     this.dockerFile = dockerFile
     this.environments = environments

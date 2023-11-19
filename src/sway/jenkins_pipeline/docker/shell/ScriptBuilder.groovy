@@ -12,29 +12,46 @@ import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
 class ScriptBuilder {
 
-  private static final String prefix = "--"
+  public static final String OPTION_PREFIX = "--"
 
   public final StringBuilder query
 
-  public String workspace
+  private String workspace
 
   ScriptBuilder(String command) {
     this.query = new StringBuilder(command)
+  }
+
+  public static ScriptBuilder getInstance(ScriptBuilderable builderable, String command) {
+    Optional<ScriptBuilder> builder = builderable.getScriptBuilder()
+    builder.ifPresent {
+      it.query.delete(0, it.query.length())
+      it.query.append(command)
+      return it
+    }
+
+    return new ScriptBuilder(command)
   }
 
   public void setWorkspace(String workspace) {
     this.workspace = workspace
   }
 
+  public Optional<String> getWorkspace() {
+    return Optional.ofNullable(this.workspace)
+  }
+
   @NonCPS
-  public void addStrOption(String value) {
-    this.query.append(" ").append(value)
+  public void addStringOption(String value, boolean isEnabled) {
+    if (isEnabled) {
+      this.query.append(" ").append(value)
+    }
   }
 
   @NonCPS
   private <T> BinaryOperator<String> listMerger(CommandLineOptionDescriptor<T> descriptor) {
     return { String acc, String next -> 
-      return acc + " ${prefix}${descriptor.name} ${next}" }
+      return acc + " ${OPTION_PREFIX}${descriptor.name} ${next}" }
   }
 
   @NonCPS
@@ -42,7 +59,7 @@ class ScriptBuilder {
     Optional<List<String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, ArrayList.class)
     optionDescriptorOpt.ifPresent {
       if (it.data.size() > 0) {
-        addStrOption(it.data.stream().reduce("", listMerger(it)).substring(1))
+        addStringOption(it.data.stream().reduce("", listMerger(it)).substring(1), true)
       }
     }
   }
@@ -50,7 +67,7 @@ class ScriptBuilder {
   @NonCPS
   private <T> BinaryOperator<String> mapMerger(CommandLineOptionDescriptor<T> descriptor) {
     return { String acc, Map.Entry next -> 
-      return acc + " ${prefix}${descriptor.name} ${next.getKey()}=${next.getValue()}" }
+      return acc + " ${OPTION_PREFIX}${descriptor.name} ${next.getKey()}=${next.getValue()}" }
   }
 
   @NonCPS
@@ -58,7 +75,7 @@ class ScriptBuilder {
     Optional<Map<String, String>> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, HashMap.class)
     optionDescriptorOpt.ifPresent {
       if (it.data.size() > 0) {
-        addStrOption(it.data.entrySet().stream().reduce("", mapMerger(it)).substring(1))
+        addStringOption(it.data.entrySet().stream().reduce("", mapMerger(it)).substring(1), true)
       }
     }
   }
@@ -67,8 +84,8 @@ class ScriptBuilder {
   public void addOption(Field field, Object object) {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
     optionDescriptorOpt.ifPresent {
-      addStrOption(prefix + it.name)
-      addStrOption(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data)
+      addStringOption(OPTION_PREFIX + it.name, true)
+      addStringOption(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data, true)
     }
   }
 

@@ -6,13 +6,13 @@ import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
 import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
-class ImageInspectQueryHandler implements QueryHandler<ImageInspectQuery, Map<String, String>> {
+class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery, Map<String, String>> {
   
   private final Executor executor
 
   private ScriptBuilder builder
 
-  ImageInspectQueryHandler(Executor executor) {
+  ContainerInspectQueryHandler(Executor executor) {
     this.executor = executor
   }
 
@@ -22,10 +22,10 @@ class ImageInspectQueryHandler implements QueryHandler<ImageInspectQuery, Map<St
   }
 
   @Override
-  public Map<String, String> handle(ImageInspectQuery query) {
-    this.builder = ScriptBuilder.getInstance(this, "images")
+  public Map<String, String> handle(ContainerInspectQuery query) {
+    this.builder = ScriptBuilder.getInstance(this, "inspect")
 
-    this.builder.addOption(CommandLineOptionUtils.findField(query, "reference"), query)
+    this.builder.addOption(CommandLineOptionUtils.findField(query, "name"), query)
     this.builder.addOption(CommandLineOptionUtils.findField(query, "format"), query)
 
     Response response = this.executor.execute(this.builder)

@@ -8,20 +8,12 @@ class CreateContainerCommand implements Command {
   @CommandLineOption(name = "name", required = true)
   public String name
 
-  @CommandLineOption(name = "interactive", skipped = true)
-  public boolean interactive
-
-  @CommandLineOption(name = "tty", skipped = true)
-  public boolean tty
-
   @CommandLineOption(skipped = true)
-  public String imageId
+  public String reference
 
-  CreateContainerCommand(ContainerEntity entity, boolean interactive, boolean tty, String imageId) {
+  CreateContainerCommand(ContainerEntity entity, String reference) {
     this.name = entity.name
-    this.interactive = interactive
-    this.tty = tty
-    this.imageId = imageId
+    this.reference = reference
   }
 
 }

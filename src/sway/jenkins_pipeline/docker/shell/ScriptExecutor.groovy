@@ -16,8 +16,13 @@ class ScriptExecutor implements Executor {
 
   @Override
   public Response execute(ScriptBuilder builder) {
-    if (builder.workspace != null && !builder.workspace.trim().isEmpty()) {
-      builder.addStrOption(builder.workspace)
+    Optional<String> workspaceOpt = builder.getWorkspace()
+    workspaceOpt.ifPresent {
+      if (it.trim().isEmpty()) {
+        return
+      }
+
+      builder.addStringOption(it, true)
     }
 
     Process process = "${this.executable}/docker ${builder.toString()}".execute()

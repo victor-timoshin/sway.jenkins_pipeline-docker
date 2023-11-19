@@ -20,9 +20,17 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
   }
 
   @Override
+  public Optional<ScriptBuilder> getScriptBuilder() {
+    return Optional.ofNullable(this.builder)
+  }
+
+  @Override
   public CommandResult<String> handle(BuildImageCommand command) {
-    this.builder = new ScriptBuilder("build")
+    this.builder = ScriptBuilder.getInstance(this, "build")
     this.builder.setWorkspace(command.dockerWorkspace)
+    this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}no-nache", command.noCache)
+    this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}pull", command.pull)
+    this.builder.addStringOption("${ScriptBuilder.OPTION_PREFIX}rm", command.rm)
 
     CommandLineOptionUtils.findFields(command).each { field -> 
       this.builder.addOption(field, command)

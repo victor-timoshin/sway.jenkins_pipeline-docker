@@ -15,10 +15,15 @@ class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCom
   }
 
   @Override
-  public CommandResult<String> handle(CreateMultiarchCommand command) {
-    this.builder = new ScriptBuilder("manifest create")
+  public Optional<ScriptBuilder> getScriptBuilder() {
+    return Optional.ofNullable(this.builder)
+  }
 
-    this.builder.addStrOption(command.reference)
+  @Override
+  public CommandResult<String> handle(CreateMultiarchCommand command) {
+    this.builder = ScriptBuilder.getInstance(this, "manifest create")
+
+    this.builder.addStringOption(command.reference, true)
     this.builder.addListOption(CommandLineOptionUtils.findField(command, "amend"), command)
 
     Response response = this.executor.execute(this.builder)

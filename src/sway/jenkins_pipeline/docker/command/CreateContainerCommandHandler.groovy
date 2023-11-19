@@ -3,6 +3,8 @@ package sway.jenkins_pipeline.docker.command
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
+import sway.jenkins_pipeline.docker.annotations.CommandLineOption
+import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
 class CreateContainerCommandHandler implements CommandHandler<CreateContainerCommand, String> {
 
@@ -15,20 +17,16 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
   }
 
   @Override
+  public Optional<ScriptBuilder> getScriptBuilder() {
+    return Optional.ofNullable(this.builder)
+  }
+
+  @Override
   public CommandResult<String> handle(CreateContainerCommand command) {
-    this.builder = new ScriptBuilder("container create")
+    this.builder = ScriptBuilder.getInstance(this, "container create")
 
-    this.builder.addStrOption(command.name)
-
-    if (command.interactive) {
-      this.builder.addStrOption("--interactive")
-    }
-
-    if (command.tty) {
-      this.builder.addStrOption("--tty")
-    }
-
-    this.builder.addStrOption(command.imageId)
+    this.builder.addOption(CommandLineOptionUtils.findField(command, "name"), command)
+    this.builder.addStringOption(command.reference, true)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
