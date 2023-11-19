@@ -8,7 +8,7 @@ import sway.jenkins_pipeline.docker.entity.ImageEntity
 class BuildImageCommand implements Command {
 
   @CommandLineOption(name = "tag", required = true)
-  public String reference
+  public String imageRefName
 
   @CommandLineOption(name = "no-cache", skipped = true)
   public boolean noCache
@@ -37,10 +37,10 @@ class BuildImageCommand implements Command {
   @CommandLineOption(name = "target")
   public Object target
 
-  BuildImageCommand(ImageEntity entity, String dockerWorkspace, String dockerFile, 
+  BuildImageCommand(ImageEntity image, String dockerWorkspace, String dockerFile, 
     Map<String, String> environments, Map<String, String> arguments, String target) {
 
-    this.reference = entity.nameWithTag() + "-" + entity.platform.arch.alias.replace("/", "")
+    this.imageRefName = image.getReferenceName()
     this.noCache = true
     this.pull = true
     this.rm = true
@@ -49,9 +49,9 @@ class BuildImageCommand implements Command {
     this.dockerFile = dockerFile
     this.environments = environments
     this.arguments = arguments
-    this.arguments.put("TARGET_PLATFORM_ARCH", entity.platform.arch.alias)
-    this.arguments.put("TARGET_PLATFORM_OS", entity.platform.os.name)
-    this.arguments.put("TARGET_PLATFORM", entity.platform.os.name + "/" + entity.platform.arch.alias)
+    this.arguments.put("TARGET_PLATFORM_ARCH", image.platform.arch.alias)
+    this.arguments.put("TARGET_PLATFORM_OS", image.platform.os.name)
+    this.arguments.put("TARGET_PLATFORM", image.platform.os.name + "/" + image.platform.arch.alias)
     this.target = target
   }
 

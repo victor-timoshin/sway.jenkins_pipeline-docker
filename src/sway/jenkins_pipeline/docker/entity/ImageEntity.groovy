@@ -13,4 +13,9 @@ class ImageEntity extends Entity {
     this.platform = platform
   }
 
+  @NonCPS
+  public String getReferenceName() {
+    return this.nameWithTag() + "-" + this.platform.arch.alias.replace("/", "")
+  }
+
 }

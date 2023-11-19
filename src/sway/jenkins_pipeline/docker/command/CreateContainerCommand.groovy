@@ -1,6 +1,7 @@
 package sway.jenkins_pipeline.docker.command
 
 import sway.jenkins_pipeline.docker.annotations.CommandLineOption
+import sway.jenkins_pipeline.docker.entity.ImageEntity
 import sway.jenkins_pipeline.docker.entity.ContainerEntity
 
 class CreateContainerCommand implements Command {
@@ -9,11 +10,11 @@ class CreateContainerCommand implements Command {
   public String name
 
   @CommandLineOption(skipped = true)
-  public String reference
+  public String imageRefName
 
-  CreateContainerCommand(ContainerEntity entity, String reference) {
-    this.name = entity.name
-    this.reference = reference
+  CreateContainerCommand(ContainerEntity container, ImageEntity image) {
+    this.name = container.name
+    this.imageRefName = image.getReferenceName()
   }
 
 }
