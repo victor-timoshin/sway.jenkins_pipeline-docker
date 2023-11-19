@@ -23,6 +23,20 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
 
   @Override
   public CommandResult<String> handle(CreateContainerCommand command) {
+
+    this.builder = ScriptBuilder.getInstance(this, "ps")
+    this.builder.addStringOption("-aqf", true)
+    this.builder.addStringOption("name=${command.name}", true)
+    this.executor.execute(this.builder)
+
+    String containerId = this.executor.getOutString()
+    if (containerId.length > 0) {
+      this.builder = ScriptBuilder.getInstance(this, "rm")
+      this.builder.addStringOption("--force", true)
+      this.builder.addStringOption(containerId, true)
+      this.executor.execute(this.builder)
+    }
+
     this.builder = ScriptBuilder.getInstance(this, "container create")
 
     this.builder.addOption(CommandLineOptionUtils.findField(command, "name"), command)
