@@ -30,7 +30,7 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
     this.executor.execute(this.builder)
 
     String containerId = this.executor.getOutString()
-    if (containerId.length > 0) {
+    if (containerId.length() > 0) {
       this.builder = ScriptBuilder.getInstance(this, "rm")
       this.builder.addStringOption("--force", true)
       this.builder.addStringOption(containerId, true)
