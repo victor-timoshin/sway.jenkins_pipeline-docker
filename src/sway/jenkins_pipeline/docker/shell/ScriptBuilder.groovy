@@ -86,7 +86,9 @@ class ScriptBuilder {
     Optional<String> optionDescriptorOpt = CommandLineOptionUtils.getDescriptor(field, object, String.class)
     optionDescriptorOpt.ifPresent {
       addStringOption(OPTION_PREFIX + it.name, true)
-      addStringOption(field.getAnnotation(CommandLineOption).workspaceDir() ? "${this.workspace}/${it.data}" : it.data, true)
+      addStringOption(field.getAnnotation(CommandLineOption).workspaceDir() 
+        ? "${getWorkspace().get()}/${it.data}" 
+        : it.data, true)
     }
   }
 
