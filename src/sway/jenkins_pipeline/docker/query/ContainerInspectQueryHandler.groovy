@@ -25,8 +25,8 @@ class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery
   public Map<String, String> handle(ContainerInspectQuery query) {
     this.builder = ScriptBuilder.getInstance(this, "inspect")
 
-    this.builder.addOption(CommandLineOptionUtils.findField(query, "name"), query)
     this.builder.addOption(CommandLineOptionUtils.findField(query, "format"), query)
+    this.builder.addStringOption(query.name, false)
 
     Response response = this.executor.execute(this.builder)
     if (this.executor.getOutString().isEmpty() || response.getCode() != 0) {
