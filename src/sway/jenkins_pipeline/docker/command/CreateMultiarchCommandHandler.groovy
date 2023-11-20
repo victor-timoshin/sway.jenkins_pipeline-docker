@@ -23,7 +23,7 @@ class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCom
   public CommandResult<String> handle(CreateMultiarchCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "manifest create")
 
-    this.builder.addStringOption(command.reference, true)
+    this.builder.addStringOption(command.name, true)
     this.builder.addListOption(CommandLineOptionUtils.findField(command, "amend"), command)
 
     Response response = this.executor.execute(this.builder)

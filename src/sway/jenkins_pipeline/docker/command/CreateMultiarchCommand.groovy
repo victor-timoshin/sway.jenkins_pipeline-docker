@@ -1,19 +1,21 @@
 package sway.jenkins_pipeline.docker.command
 
+import java.util.stream.Collectors
+import sway.jenkins_pipeline.docker.entity.ImageEntity
 import sway.jenkins_pipeline.docker.entity.MultiarchImageEntity
 import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 
 class CreateMultiarchCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public String reference
+  public String name
 
   @CommandLineOption(name = "amend")
-  public List<String> images
+  public List<String> imageRefNames
 
-  CreateMultiarchCommand(MultiarchImageEntity entity, List<String> images) {
-    this.reference = entity.nameWithTag()
-    this.images = images
+  CreateMultiarchCommand(MultiarchImageEntity multiarchImage, List<ImageEntity> images) {
+    this.name = multiarchImage.nameWithTag()
+    this.imageRefNames = images.stream().map((entity) -> entity.getReferenceName()).collect(Collectors.toList())
   }
 
 }
