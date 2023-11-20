@@ -15,7 +15,7 @@ class CreateMultiarchCommand implements Command {
 
   CreateMultiarchCommand(MultiarchImageEntity multiarchImage, List<ImageEntity> images) {
     this.name = multiarchImage.nameWithTag()
-    this.imageRefNames = images.stream().map(entity -> entity.getReferenceName()).collect(Collectors.toList())
+    this.imageRefNames = images.stream().map { entity -> entity.getReferenceName() }.collect(Collectors.toList())
   }
 
 }
