@@ -3,6 +3,7 @@ package sway.jenkins_pipeline.docker.command
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
+import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
 class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCommand, String> {
 
