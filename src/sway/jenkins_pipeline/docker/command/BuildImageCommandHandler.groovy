@@ -1,6 +1,7 @@
 package sway.jenkins_pipeline.docker.command
 
 import java.lang.reflect.Field
+import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
 import sway.jenkins_pipeline.docker.shell.ExecuteResponse
@@ -19,6 +20,7 @@ class BuildImageCommandHandler implements CommandHandler<BuildImageCommand, Stri
     this.executor = executor
   }
 
+  @NonCPS
   @Override
   public Optional<ScriptBuilder> getScriptBuilder() {
     return Optional.ofNullable(this.builder)

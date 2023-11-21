@@ -1,5 +1,6 @@
 package sway.jenkins_pipeline.docker.command
 
+import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
@@ -16,6 +17,7 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
     this.executor = executor
   }
 
+  @NonCPS
   @Override
   public Optional<ScriptBuilder> getScriptBuilder() {
     return Optional.ofNullable(this.builder)
