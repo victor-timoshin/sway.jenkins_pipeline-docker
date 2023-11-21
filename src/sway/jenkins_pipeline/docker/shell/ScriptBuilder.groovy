@@ -21,6 +21,7 @@ class ScriptBuilder {
     this.query = new StringBuilder(command)
   }
 
+  @NonCPS
   public static ScriptBuilder getInstance(ScriptBuilderable builderable, String command) {
     Optional<ScriptBuilder> builder = builderable.getScriptBuilder()
     builder.ifPresent {
