@@ -1,6 +1,7 @@
 package sway.jenkins_pipeline.docker.query
 
 import groovy.json.JsonSlurper
+import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
@@ -16,6 +17,8 @@ class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery
     this.executor = executor
   }
 
+  
+  @NonCPS
   @Override
   public Optional<ScriptBuilder> getScriptBuilder() {
     return Optional.ofNullable(this.builder)
