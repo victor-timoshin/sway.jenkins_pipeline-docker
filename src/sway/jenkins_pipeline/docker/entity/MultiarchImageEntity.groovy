@@ -7,12 +7,11 @@ class MultiarchImageEntity extends Entity {
 
   public final Map<String, ImageEntity> images = new HashMap<>()
 
-  MultiarchImageEntity(String name, String tag) {
-    super(name, tag)
-  }
+  MultiarchImageEntity(String namespace, String name, String tag) {
+    super(name)
 
-  // public void createImage(String name, String tag, TargetPlatform platform) {
-  //   images.put(name, new ImageEntity(name, tag, platform));
-  // }
+    this.setTag(tag)
+    this.setNamespace(namespace)
+  }
 
 }

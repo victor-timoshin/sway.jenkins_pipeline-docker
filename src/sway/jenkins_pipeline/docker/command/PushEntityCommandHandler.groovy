@@ -24,7 +24,7 @@ class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, Stri
   @Override
   public CommandResult<String> handle(PushEntityCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "push")
-    this.builder.addStringOption(command.reference, true)
+    this.builder.addStringOption(command.imageReferenceName, true)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

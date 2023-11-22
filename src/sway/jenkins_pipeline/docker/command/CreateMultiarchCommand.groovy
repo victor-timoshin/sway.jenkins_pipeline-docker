@@ -8,14 +8,14 @@ import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 class CreateMultiarchCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public String name
+  public String manifestName
 
   @CommandLineOption(name = "amend")
-  public List<String> imageRefNames
+  public List<String> imageReferenceNames
 
   CreateMultiarchCommand(MultiarchImageEntity multiarchImage, List<ImageEntity> images) {
-    this.name = multiarchImage.nameWithTag()
-    this.imageRefNames = images.stream().map { entity -> entity.getReferenceName() }.collect(Collectors.toList())
+    this.manifestName = multiarchImage.nameWithTag(true)
+    this.imageReferenceNames = images.stream().map { entity -> entity.nameWithArchTag(true) }.collect(Collectors.toList())
   }
 
 }

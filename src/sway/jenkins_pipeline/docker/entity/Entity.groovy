@@ -5,26 +5,26 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class Entity {
 
-  public static final String ID_EMPTY_STRING = ""
+  public static final String EMPTY_STRING = ""
 
-  public static final String TAG_EMPTY_STRING = ""
+  public static final String NAMESPACE_SEPARATE = "/"
 
   public static final String TAG_SEPARATE = ":"
 
-  private String id
-
   private final String name
 
-  private final String tag
+  private String id = EMPTY_STRING
 
-  Entity(String name, String tag) {
+  private String namespace = EMPTY_STRING
+
+  private String tag = EMPTY_STRING
+
+  Entity(String name) {
     if (name.isEmpty()) {
       throw new IllegalArgumentException("Name can't be empty")
     }
 
-    this.id = ID_EMPTY_STRING
     this.name = name
-    this.tag = tag
   }
 
   @NonCPS
@@ -38,18 +38,39 @@ class Entity {
   }
 
   @NonCPS
+  public void setNamespace(String namespace) {
+    this.namespace = namespace
+  }
+
+  @NonCPS
+  public String getNamespace() {
+    return Optional.of(this.namespace).orElse("local")
+  }
+
+  @NonCPS
   public String getName() {
     return this.name
   }
 
   @NonCPS
-  public Optional<String> getTag() {
-    return Optional.ofNullable(this.tag)
+  public void setTag(String tag) {
+    this.tag = tag
   }
 
   @NonCPS
-  public String nameWithTag() {
-    return this.name + (this.tag.isEmpty() ? TAG_EMPTY_STRING : "${TAG_SEPARATE}${this.tag}")
+  public String getTag() {
+    return Optional.of(this.tag).orElse("latest")
+  }
+
+  @NonCPS
+  public String nameWithTag(boolean ns) {
+    StringBuilder builder = new StringBuilder(this.name)
+    if (ns) {
+      builder.insert(0, "${this.getNamespace()}${NAMESPACE_SEPARATE}")
+    }
+
+    builder.append("${TAG_SEPARATE}${this.getTag()}")
+    return builder.toString()
   }
 
 }

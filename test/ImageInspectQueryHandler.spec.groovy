@@ -19,7 +19,7 @@ import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
 class ImageInspectQueryHandlerTest extends Specification {
   def "status returns succeed"() {
     setup:
-    ImageEntity imgEntity = new ImageEntity("sway/module_core", "latest-arm64", new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64))
+    ImageEntity imgEntity = new ImageEntity("mynamespace", "myname", "mytag-arm64", new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64))
     ImageInspectQuery imgQuery = new ImageInspectQuery(imgEntity)
 
     Executor executor = new ScriptExecutor("/Applications/Docker.app/Contents/Resources/bin")

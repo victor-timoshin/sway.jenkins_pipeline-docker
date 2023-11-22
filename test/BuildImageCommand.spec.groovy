@@ -22,7 +22,7 @@ class BuildImageCommandTest extends Specification {
     String dockerFile = "/Dockerfile"
     Map<String, String> envs = [:]
     Map<String, String> args = ["tests":"false", "coverage":"false"]
-    ImageEntity imageEntity = new ImageEntity("myname", "mytag", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
+    ImageEntity imageEntity = new ImageEntity("mynamespace", "myname", "mytag", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
     BuildImageCommand imageCommand = new BuildImageCommand(imageEntity, ".", dockerFile, envs, args, "module_x-release")
 
     Response response = Stub(Response)

@@ -20,14 +20,15 @@ import sway.jenkins_pipeline.docker.command.CommandResult
 class CreateMultiarchCommandTest extends Specification {
   def "status returns succeed"() {
     setup:
-    String IMAGE_NAME = "myimg"
-    String IMAGE_TAG = "latest"
+    String IMAGE_NAMESPACE = "mynamespace"
+    String IMAGE_NAME = "myname"
+    String IMAGE_TAG = "mytag"
     List<ImageEntity> imageEntities = [
-      new ImageEntity(IMAGE_NAME, IMAGE_TAG, new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)),
-      new ImageEntity(IMAGE_NAME, IMAGE_TAG, new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
+      new ImageEntity(IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG, new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)),
+      new ImageEntity(IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG, new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
     ]
 
-    MultiarchImageEntity multiarchImageEntity = new MultiarchImageEntity(IMAGE_NAME, IMAGE_TAG)
+    MultiarchImageEntity multiarchImageEntity = new MultiarchImageEntity(IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG)
     CreateMultiarchCommand multiarchImageCommand = new CreateMultiarchCommand(multiarchImageEntity, imageEntities)
 
     Response response = Stub(Response)

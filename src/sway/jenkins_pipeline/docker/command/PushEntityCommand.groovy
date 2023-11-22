@@ -7,10 +7,10 @@ import sway.jenkins_pipeline.docker.annotations.CommandLineOption
 class PushEntityCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public String reference
+  public String imageReferenceName
 
-  PushEntityCommand(ImageEntity entity) {
-    this.reference = entity.nameWithTag()
+  PushEntityCommand(ImageEntity image) {
+    this.imageReferenceName = entity.nameWithTag(true)
   }
   
 }

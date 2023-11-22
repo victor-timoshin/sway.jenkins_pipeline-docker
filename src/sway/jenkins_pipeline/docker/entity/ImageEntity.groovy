@@ -7,15 +7,18 @@ class ImageEntity extends Entity {
 
   public final TargetPlatform platform
 
-  ImageEntity(String name, String tag, TargetPlatform platform) {
-    super(name, tag)
+  ImageEntity(String namespace, String name, String tag, TargetPlatform platform) {
+    super(name)
+
+    this.setTag(tag)
+    this.setNamespace(namespace)
   
     this.platform = platform
   }
 
   @NonCPS
-  public String getReferenceName() {
-    return this.nameWithTag() + "-" + this.platform.arch.alias.replace("/", "")
+  public String nameWithArchTag(boolean ns) {
+    return this.nameWithTag(ns) + "-" + this.platform.arch.alias.replace("/", "")
   }
 
 }

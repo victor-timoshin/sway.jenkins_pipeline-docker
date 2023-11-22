@@ -26,8 +26,8 @@ class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCom
   public CommandResult<String> handle(CreateMultiarchCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "manifest create")
 
-    this.builder.addStringOption(command.name, true)
-    this.builder.addListOption(CommandLineOptionUtils.findField(command, "imageRefNames"), command)
+    this.builder.addStringOption(command.manifestName, true)
+    this.builder.addListOption(CommandLineOptionUtils.findField(command, "imageReferenceNames"), command)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

@@ -27,7 +27,7 @@ class ImageInspectQueryHandler implements QueryHandler<ImageInspectQuery, Map<St
   public Map<String, String> handle(ImageInspectQuery query) {
     this.builder = ScriptBuilder.getInstance(this, "images")
 
-    this.builder.addOption(CommandLineOptionUtils.findField(query, "imageRefName"), query)
+    this.builder.addOption(CommandLineOptionUtils.findField(query, "imageReferenceName"), query)
     this.builder.addOption(CommandLineOptionUtils.findField(query, "format"), query)
 
     Response response = this.executor.execute(this.builder)

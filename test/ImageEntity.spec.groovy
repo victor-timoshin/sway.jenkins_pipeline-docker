@@ -6,15 +6,15 @@ import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.entity.ImageEntity
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 
-class ImageTest extends Specification {
-  def "name returns default:latest"() {
+class ImageEntityTest extends Specification {
+  def "name returns mynamespace/myname:mytag"() {
     setup:
-    def img = new ImageEntity("default", "latest", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
+    def img = new ImageEntity("mynamespace", "myname", "mytag", new TargetPlatform(OSType.LINUX, ArchitectureType.X64))
 
     when:
-    def result = img.nameWithTag()
+    def result = img.nameWithTag(true)
 
     then:
-    result == "default:latest"
+    result == "mynamespace/myname:mytag"
   }
 }

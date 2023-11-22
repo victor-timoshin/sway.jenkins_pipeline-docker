@@ -14,7 +14,7 @@ class CreateContainerCommand implements Command {
 
   CreateContainerCommand(ContainerEntity container, ImageEntity image) {
     this.name = container.name
-    this.imageRefName = image.getReferenceName()
+    this.imageRefName = image.nameWithArchTag(true)
   }
 
 }
