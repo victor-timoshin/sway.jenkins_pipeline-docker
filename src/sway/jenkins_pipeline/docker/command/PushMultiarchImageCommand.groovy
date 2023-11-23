@@ -13,7 +13,7 @@ class PushMultiarchImageCommand implements Command {
   public String regNamespace
 
   PushMultiarchImageCommand(MultiarchImageEntity img, String regNamespace) {
-    this.imgReferenceName = img.nameWithArchTag(false)
+    this.imgReferenceName = img.nameWithTag(false)
     this.regNamespace = regNamespace
   }
 
