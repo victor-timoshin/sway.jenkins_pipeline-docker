@@ -5,7 +5,7 @@ import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
 
-class PushImageCommandCommandHandler implements CommandHandler<PushImageCommand, String> {
+class PushImageCommandHandler implements CommandHandler<PushImageCommand, String> {
 
   private final Executor executor
 
