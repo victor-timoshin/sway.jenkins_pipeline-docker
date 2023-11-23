@@ -4,15 +4,14 @@ import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
-import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
-class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCommand, String> {
+class PushImageCommandCommandHandler implements CommandHandler<PushImageCommand, String> {
 
   private final Executor executor
 
   private ScriptBuilder builder
 
-  CreateMultiarchCommandHandler(Executor executor) {
+  PushImageCommandHandler(Executor executor) {
     this.executor = executor
   }
 
@@ -23,11 +22,13 @@ class CreateMultiarchCommandHandler implements CommandHandler<CreateMultiarchCom
   }
 
   @Override
-  public CommandResult<String> handle(CreateMultiarchCommand command) {
-    this.builder = ScriptBuilder.getInstance(this, "manifest create")
+  public CommandResult<String> handle(PushImageCommand command) {
+    this.builder = ScriptBuilder.getInstance(this, "tag")
+    this.builder.addStringOption("${command.imgNamespace}/${command.imgReferenceName}", true)
+    this.builder.addStringOption("${command.regNamespace}/${command.imgReferenceName}", true)
 
-    this.builder.addStringOption(command.manifestName, true)
-    this.builder.addListOption(CommandLineOptionUtils.findField(command, "imageReferenceNames"), command)
+    this.builder = ScriptBuilder.getInstance(this, "push")
+    this.builder.addStringOption("${command.regNamespace}/${command.imgReferenceName}", true)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

@@ -6,13 +6,13 @@ import sway.jenkins_pipeline.docker.model.ContainerResponse
 
 class SingleContainerInspector implements ContainerInspector {
 
-  public ContainerResponse inspect(String dockerPath, ContainerEntity container) {
+  public ContainerResponse inspect(String dockerPath, ContainerEntity cntr) {
     def outStream = new StringBuilder()
     def errStream = new StringBuilder()
 
     def outFormat = "{\"id\":\"{{.Id}}\",\"status\":\"{{.State.Status}}\"}"
 
-    def proc = "${dockerPath}/docker inspect --format \"${outFormat}\" ${container.descriptor().name}".execute()
+    def proc = "${dockerPath}/docker inspect --format \"${outFormat}\" ${cntr.descriptor().name}".execute()
     proc.waitForProcessOutput(outStream, errStream)
 
     def response

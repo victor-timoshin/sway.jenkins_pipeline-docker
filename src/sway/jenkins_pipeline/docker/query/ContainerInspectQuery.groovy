@@ -11,8 +11,8 @@ class ContainerInspectQuery implements Query {
   @CommandLineOption(name = "name", skipped = true)
   public String name
 
-  ContainerInspectQuery(ContainerEntity container) {
-    this.name = container.name
+  ContainerInspectQuery(ContainerEntity cntr) {
+    this.name = cntr.name
   }
 
 }

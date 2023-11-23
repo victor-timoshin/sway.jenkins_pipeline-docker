@@ -6,13 +6,13 @@ import sway.jenkins_pipeline.docker.entity.ImageEntity
 class ImageInspectQuery implements Query {
 
   @CommandLineOption(name = "quiet", required = true)
-  public String imageReferenceName
+  public String imgReferenceName
 
   @CommandLineOption(name = "format", required = true)
   public String format = "{\"id\":\"{{.ID}}\",\"repo\":\"{{.Repository}}\"}"
 
   ImageInspectQuery(ImageEntity image) {
-    this.imageReferenceName = image.nameWithArchTag(true)
+    this.imgReferenceName = image.nameWithArchTag(true)
   }
 
 }

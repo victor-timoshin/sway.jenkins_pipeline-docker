@@ -8,7 +8,7 @@ import sway.jenkins_pipeline.docker.entity.ImageEntity
 class BuildImageCommand implements Command {
 
   @CommandLineOption(name = "tag", required = true)
-  public String imageReferenceName
+  public String imgReferenceName
 
   @CommandLineOption(name = "no-cache", skipped = true)
   public boolean noCache
@@ -43,7 +43,7 @@ class BuildImageCommand implements Command {
   BuildImageCommand(ImageEntity image, String dockerWorkspace, String dockerFile, 
     Map<String, String> environments, Map<String, String> arguments, String target) {
 
-    this.imageReferenceName = image.nameWithArchTag(true)
+    this.imgReferenceName = image.nameWithArchTag(true)
     this.noCache = true
     this.pull = true
     this.rm = true

@@ -5,13 +5,13 @@ import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
 
-class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, String> {
+class PushMultiarchImageCommandHandler implements CommandHandler<PushMultiarchImageCommand, String> {
 
   private final Executor executor
 
   private ScriptBuilder builder
 
-  PushEntityCommandHandler(Executor executor) {
+  PushMultiarchImageCommandHandler(Executor executor) {
     this.executor = executor
   }
 
@@ -22,9 +22,9 @@ class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, Stri
   }
 
   @Override
-  public CommandResult<String> handle(PushEntityCommand command) {
-    this.builder = ScriptBuilder.getInstance(this, "push")
-    this.builder.addStringOption(command.imageReferenceName, true)
+  public CommandResult<String> handle(PushMultiarchImageCommand command) {
+    this.builder = ScriptBuilder.getInstance(this, "manifest push")
+    this.builder.addStringOption("${command.regNamespace}/${command.imgReferenceName}", true)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
@@ -33,6 +33,6 @@ class PushEntityCommandHandler implements CommandHandler<PushEntityCommand, Stri
 
     return CommandResult.Successful(null, this.executor.getOutString())
   }
-  
+
 }
 

@@ -10,11 +10,11 @@ class CreateContainerCommand implements Command {
   public String name
 
   @CommandLineOption(skipped = true)
-  public String imageRefName
+  public String imgReferenceName
 
-  CreateContainerCommand(ContainerEntity container, ImageEntity image) {
-    this.name = container.name
-    this.imageRefName = image.nameWithArchTag(true)
+  CreateContainerCommand(ContainerEntity cntr, ImageEntity img) {
+    this.name = cntr.name
+    this.imgReferenceName = img.nameWithArchTag(true)
   }
 
 }

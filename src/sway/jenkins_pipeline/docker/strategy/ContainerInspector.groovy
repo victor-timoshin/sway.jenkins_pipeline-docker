@@ -5,6 +5,6 @@ import sway.jenkins_pipeline.docker.model.ContainerResponse
 
 interface ContainerInspector {
 
-  ContainerResponse inspect(String dockerPath, ContainerEntity container)
+  ContainerResponse inspect(String dockerPath, ContainerEntity cntr)
 
 }

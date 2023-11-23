@@ -13,11 +13,11 @@ import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
 import sway.jenkins_pipeline.docker.entity.MultiarchImageEntity
 import sway.jenkins_pipeline.docker.command.Command
-import sway.jenkins_pipeline.docker.command.CreateMultiarchCommand
-import sway.jenkins_pipeline.docker.command.CreateMultiarchCommandHandler
+import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommand
+import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommandHandler
 import sway.jenkins_pipeline.docker.command.CommandResult
 
-class CreateMultiarchCommandTest extends Specification {
+class CreateMultiarchImageCommandTest extends Specification {
   def "status returns succeed"() {
     setup:
     String IMAGE_NAMESPACE = "mynamespace"
@@ -29,7 +29,7 @@ class CreateMultiarchCommandTest extends Specification {
     ]
 
     MultiarchImageEntity multiarchImageEntity = new MultiarchImageEntity(IMAGE_NAMESPACE, IMAGE_NAME, IMAGE_TAG)
-    CreateMultiarchCommand multiarchImageCommand = new CreateMultiarchCommand(multiarchImageEntity, imageEntities)
+    CreateMultiarchImageCommand multiarchImageCommand = new CreateMultiarchImageCommand(multiarchImageEntity, imageEntities)
 
     Response response = Stub(Response)
     response.getCode() >> 0
@@ -41,7 +41,7 @@ class CreateMultiarchCommandTest extends Specification {
       getErrString() >> "err"
     }
 
-    def multiarchImageCommandHandler = new CreateMultiarchCommandHandler(executor)
+    def multiarchImageCommandHandler = new CreateMultiarchImageCommandHandler(executor)
 
     when:
     def result = multiarchImageCommandHandler.handle(multiarchImageCommand)

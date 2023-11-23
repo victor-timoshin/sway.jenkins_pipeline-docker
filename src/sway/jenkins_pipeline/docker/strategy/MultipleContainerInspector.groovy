@@ -33,7 +33,7 @@ class Scenario {
 
 class MultipleContainerInspector implements ContainerInspector {
 
-  public ContainerResponse inspect(String dockerPath, ContainerEntity container) {
+  public ContainerResponse inspect(String dockerPath, ContainerEntity cntr) {
 
     // println Scenario.getStdout("${dockerPath}/docker buildx inspect ${container.name}1")
 
