@@ -32,11 +32,13 @@ class ScriptExecutor implements Executor {
     return new ExecuteResponse(process.exitValue())
   }
 
+  @NonCPS
   @Override
   public String getOutString() {
     return outStream.toString().trim()
   }
 
+  @NonCPS
   @Override
   public String getErrString() {
     return errStream.toString().trim()
