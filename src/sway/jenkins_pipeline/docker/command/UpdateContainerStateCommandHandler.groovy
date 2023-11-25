@@ -27,7 +27,7 @@ class UpdateContainerStateCommandHandler implements CommandHandler<UpdateContain
   @Override
   public CommandResult<String> handle(UpdateContainerStateCommand command) {
     this.builder = ScriptBuilder.getInstance(this, command.action)
-    this.builder.addStringOption(command.id.get(), true)
+    this.builder.addStringOption(command.id, true)
 
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {
