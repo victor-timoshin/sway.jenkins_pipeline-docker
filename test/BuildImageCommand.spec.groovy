@@ -36,7 +36,7 @@ class BuildImageCommandTest extends Specification {
       getErrString() >> "err"
     }
 
-    def imageCommandHandler = new BuildImageCommandHandler(executor)
+    BuildImageCommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
 
     when:
     def result = imageCommandHandler.handle(imageCommand)

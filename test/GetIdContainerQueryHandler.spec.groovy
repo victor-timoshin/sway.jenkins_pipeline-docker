@@ -18,13 +18,23 @@ class GetIdContainerQueryHandlerTest extends Specification {
     ContainerEntity container = new ContainerEntity("cntr")
     GetIdContainerQuery containerQry = new GetIdContainerQuery(container)
 
-    Executor executor = new ScriptExecutor("/Applications/Docker.app/Contents/Resources/bin")
+    Response response = Stub(Response)
+    response.getCode() >> 0
+
+    // Executor executor = new ScriptExecutor("/Applications/Docker.app/Contents/Resources/bin")
+    Executor executor = Stub(Executor) {
+      execute(_ as ScriptBuilder) >> response
+
+      getOutString() >> "cntr_id"
+      getErrString() >> ""
+    }
+
     GetIdContainerQueryHandler containerQryHandler = new GetIdContainerQueryHandler(executor)
 
     when:
     def result = containerQryHandler.handle(containerQry)
 
     then:
-    result == null
+    result == Optional.of("cntr_id")
   }
 }
