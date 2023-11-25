@@ -1,19 +1,18 @@
 package sway.jenkins_pipeline.docker.query
 
-import groovy.json.JsonSlurper
 import com.cloudbees.groovy.cps.NonCPS
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
 import sway.jenkins_pipeline.docker.annotations.CommandLineOptionUtils
 
-class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery, Map<String, String>> {
+class GetIdContainerQueryHandler implements QueryHandler<GetIdContainerQuery, Optional<String>> {
   
   private final Executor executor
 
   private ScriptBuilder builder
 
-  ContainerInspectQueryHandler(Executor executor) {
+  GetIdContainerQueryHandler(Executor executor) {
     this.executor = executor
   }
 
@@ -23,20 +22,19 @@ class ContainerInspectQueryHandler implements QueryHandler<ContainerInspectQuery
     return Optional.ofNullable(this.builder)
   }
 
+  @NonCPS
   @Override
-  public Map<String, String> handle(ContainerInspectQuery query) {
-    this.builder = ScriptBuilder.getInstance(this, "inspect")
-
-    this.builder.addOption(CommandLineOptionUtils.findField(query, "format"), query)
-    this.builder.addStringOption(query.name, true)
-
+  public Optional<String> handle(GetIdContainerQuery query) {
+    this.builder = ScriptBuilder.getInstance(this, "ps")
+    this.builder.addStringOption("--quiet", true)
+    this.builder.addStringOption("--all", true)
+    this.builder.addStringOption("--filter name=${query.name}", true)
     Response response = this.executor.execute(this.builder)
     if (this.executor.getOutString().isEmpty() || response.getCode() != 0) {
-      return [:]
+      return Optional.empty()
     }
 
-    JsonSlurper json = new JsonSlurper()
-    return json.parseText(this.executor.getOutString())
+    return Optional.of(this.executor.getOutString())
   }
 
 }
