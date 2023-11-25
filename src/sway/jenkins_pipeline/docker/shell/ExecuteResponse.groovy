@@ -1,5 +1,7 @@
 package sway.jenkins_pipeline.docker.shell
 
+import com.cloudbees.groovy.cps.NonCPS
+
 class ExecuteResponse implements Response {
 
   private final int exitCode
@@ -8,6 +10,7 @@ class ExecuteResponse implements Response {
     this.exitCode = code
   }
 
+  @NonCPS
   @Override
   public int getCode() {
     return this.exitCode
