@@ -1,7 +1,7 @@
 package sway.jenkins_pipeline.docker.command
 
 import com.cloudbees.groovy.cps.NonCPS
-import groovy.json.JsonSlurper
+// import groovy.json.JsonSlurper
 import sway.jenkins_pipeline.docker.shell.ScriptBuilder
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.Response
@@ -53,9 +53,9 @@ class CreateContainerCommandHandler implements CommandHandler<CreateContainerCom
       return CommandResult.Unsuccessful(this.executor.getErrString())
     }
 
-    def json = new JsonSlurper()
-    def data = json.parseText(this.executor.getOutString())
-    return CommandResult.Successful(data.id, this.executor.getOutString())
+    // def json = new JsonSlurper()
+    // def data = json.parseText(this.executor.getOutString())
+    return CommandResult.Successful(null, this.executor.getOutString())
   }
   
 }

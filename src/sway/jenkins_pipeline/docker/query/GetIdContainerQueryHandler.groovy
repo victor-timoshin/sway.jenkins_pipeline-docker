@@ -29,6 +29,7 @@ class GetIdContainerQueryHandler implements QueryHandler<GetIdContainerQuery, Op
     this.builder.addStringOption("--quiet", true)
     this.builder.addStringOption("--all", true)
     this.builder.addStringOption("--filter name=${query.name}", true)
+    println this.builder.toString()
     Response response = this.executor.execute(this.builder)
     if (this.executor.getOutString().isEmpty() || response.getCode() != 0) {
       return Optional.empty()
