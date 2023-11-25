@@ -9,7 +9,7 @@ class GetIdContainerQuery implements Query {
   public String name
 
   GetIdContainerQuery(ContainerEntity cntr) {
-    this.name = cntr.name
+    this.name = cntr.getName()
   }
 
 }
