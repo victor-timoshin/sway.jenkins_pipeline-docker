@@ -27,7 +27,7 @@ class RemoveImageCommandHandler implements CommandHandler<RemoveImageCommand, St
   @Override
   public CommandResult<String> handle(RemoveImageCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "rmi")
-    this.builder.addStringOption(command.id.get(), true)
+    this.builder.addStringOption(command.id, true)
   
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

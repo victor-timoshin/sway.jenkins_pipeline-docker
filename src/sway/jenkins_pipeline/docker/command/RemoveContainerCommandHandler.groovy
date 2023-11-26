@@ -28,7 +28,7 @@ class RemoveContainerCommandHandler implements CommandHandler<RemoveContainerCom
   public CommandResult<String> handle(RemoveContainerCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "rm")
     this.builder.addStringOption("--force", true)
-    this.builder.addStringOption(command.id.get(), true)
+    this.builder.addStringOption(command.id, true)
   
     Response response = this.executor.execute(this.builder)
     if (response.getCode() != 0) {

@@ -8,10 +8,10 @@ import sway.jenkins_pipeline.docker.entity.ContainerEntity
 class RemoveContainerCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public Optional<String> id
+  public String id
 
   RemoveContainerCommand(ContainerEntity cntr) {
-    this.id = cntr.getId()
+    this.id = cntr.getId().get()
   }
 
 }

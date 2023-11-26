@@ -28,7 +28,7 @@ class RunContainerScenarioCommandHandler implements CommandHandler<RunContainerS
   public CommandResult<String> handle(RunContainerScenarioCommand command) {
     this.builder = ScriptBuilder.getInstance(this, "exec")
     this.builder.addStringOption("--interactive", true)
-    this.builder.addStringOption(command.id.get(), true)
+    this.builder.addStringOption(command.id, true)
     this.builder.addStringOption(command.scenario, true)
   
     Response response = this.executor.execute(this.builder)

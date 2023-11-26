@@ -8,13 +8,13 @@ import sway.jenkins_pipeline.docker.entity.ContainerEntity
 class RunContainerScenarioCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public Optional<String> id
+  public String id
 
   @CommandLineOption(skipped = true)
   public String scenario
 
   RunContainerScenarioCommand(ContainerEntity cntr, String scenario) {
-    this.id = cntr.getId()
+    this.id = cntr.getId().get()
     this.scenario = scenario
   }
 

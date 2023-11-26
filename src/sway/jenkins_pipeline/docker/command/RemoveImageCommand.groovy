@@ -7,10 +7,10 @@ import sway.jenkins_pipeline.docker.entity.ImageEntity
 class RemoveImageCommand implements Command {
 
   @CommandLineOption(skipped = true)
-  public Optional<String> id
+  public String id
 
   RemoveImageCommand(ImageEntity img) {
-    this.id = img.getId()
+    this.id = img.getId().get()
   }
 
 }
